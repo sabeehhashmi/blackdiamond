@@ -7,6 +7,7 @@ use DB;
 use App\Models\User;
 use Hash;
 use Response;
+use Illuminate\Support\Facades\Auth;
 
 class Users extends Controller
 {
@@ -49,4 +50,19 @@ class Users extends Controller
     return $transaction;
 
 }
+public function login(){
+        if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){
+
+            $user = Auth::user();
+
+            $data['token'] = $user->createToken('blackDiamond')->plainTextToken;
+
+            $data['user'] = $user;
+            return response()->json(['success' => 1,'data' =>$data,  ], 200);
+        }
+
+        else{
+            return response()->json(['success' => 0,'error'=>'Unauthorised'], 401);
+        }
+    }
 }
