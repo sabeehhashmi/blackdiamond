@@ -116,7 +116,7 @@ function NewLoginForm({setIslogged,setloggeduser}) {
                 </div>
                 
                 <div class="text-center">
-                    <p class="mt-5"><a href="#" class="link">Forgot password?</a></p>
+                    <p class="mt-5"><a href="/forgetpassword" class="link">Forgot password?</a></p>
                 </div>
             </div>
         </div>

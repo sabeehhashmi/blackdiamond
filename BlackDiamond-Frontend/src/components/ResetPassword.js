@@ -3,9 +3,10 @@ import { withRouter, useHistory } from 'react-router-dom';
 import axios from 'axios'
 function ResetPassword(props) {
     const [pass, setPass] = useState("")
+    const [email, setEmail] = useState("")
     const [error, setError] = useState(null);
+    const [verificationcode, setVerificationcode] = useState(null);
     const [message, setMessage] = useState(null);
-    const token = props.match.params.token;
     let history = useHistory();
     const [redirectToReferrer, setRedirectToReferrer] = useState("false")
     const handleChange= async (e)=>{
@@ -13,10 +14,11 @@ function ResetPassword(props) {
         e.preventDefault()
         
         
-        const URL = "http://localhost:5000/nextforgetpassword";
+        const URL = "http://127.0.0.1:8000/api/reset-password?email="+email+"&verification_code="+verificationcode+"&password="+pass;
         var data2 ={
-            passwordToken: token,
-            password: pass,
+            email: email,
+            verificationcode: verificationcode,
+            password:pass
             
         }
         console.log("my data in front bs",data2)
@@ -35,8 +37,10 @@ function ResetPassword(props) {
           }}
         
         axios(options).then(response => {
-          console.log("Response is ",response.data)
-          setMessage(response.data.message)
+          console.log("Response is ",response)
+          if(response.data.success==1){
+              setMessage(response.data.message)
+          }
           
         })
         
@@ -62,7 +66,10 @@ function ResetPassword(props) {
         // Update the document title using the browser API
         
         
-        console.log("Reset Password: ", token)
+        //console.log("Reset Password: ", token)
+        const data = JSON.parse(localStorage.getItem('reset'))
+        console.log(JSON.parse(localStorage.getItem('reset')))
+        setEmail(JSON.parse(localStorage.getItem('reset')))
         
       },[]);
     
@@ -74,7 +81,10 @@ function ResetPassword(props) {
             <form >
                 <h3>Reset Password</h3>
 
-                
+                <div className="form-group">
+                    <label>Verification Code</label>
+                    <input onChange={(e)=>{setVerificationcode(e.target.value)}} className="form-control" placeholder="Enter Verification Code" />
+                </div>
 
                 <div className="form-group">
                     <label>New Password</label>

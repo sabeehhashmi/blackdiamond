@@ -111,7 +111,7 @@ function Routes(props) {
                         </Route>
                         <Route path="/sellerprofile" component={SellerProfile}/>
                         <Route path="/forgetpassword" component={ForgetPassword}/>
-                        <Route path="/reset/:token" component={ResetPassword}/>
+                        <Route path="/reset" component={ResetPassword}/>
                         <Route path="/settings" >
                           <Settings />
                         </Route>

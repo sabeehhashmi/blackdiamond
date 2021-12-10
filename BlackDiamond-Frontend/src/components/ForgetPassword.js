@@ -13,7 +13,7 @@ function ForgetPassword({}) {
         e.preventDefault()
         
         
-        const URL = "http://localhost:5000/forgetpassword";
+        const URL = "http://127.0.0.1:8000/api/reset-password-code";
         var data2 ={
             email: email
             
@@ -36,7 +36,12 @@ function ForgetPassword({}) {
         axios(options).then(response => {
           
             console.log(response.data)
-            setMessage(response.data)
+            localStorage.setItem('reset', JSON.stringify(email))
+            
+            //setMessage(response.data)
+            if(response.data.success==1){
+                history.push('/reset')
+            }
             
 
           
