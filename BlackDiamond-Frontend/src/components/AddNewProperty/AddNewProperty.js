@@ -1,10 +1,15 @@
-import React,{useEffect,useState} from 'react'
+import React,{useEffect,useState, useContext} from 'react'
 import '../fullcss.css'
+import {UserContext} from '../UserContext'
 function AddNewProperty() {
+    const valuecontext = useContext(UserContext);
     const onIMGChangeHandler2=(event)=>{
 
         console.log(event.target.files[0])
     
+    }
+    const handleSubmit= async ()=>{
+        console.log(valuecontext.islogged)
     }
     return (
         <div>
@@ -14,9 +19,9 @@ function AddNewProperty() {
                 <div class="row">
                     <div class="col-lg-12 col-md-12">
                     
-                        <div class="alert alert-success" role="alert">
+                        {valuecontext.islogged?null:<div class="alert alert-danger" role="alert">
                         <p>Please, Sign In before you submit a property. If you don't have an account you can create one by <a href="/sign-up">Clicking Here</a></p>
-                        </div>
+                        </div>}
                     
                     </div>
                     
@@ -259,7 +264,7 @@ function AddNewProperty() {
                             </div>
                             
                             <div class="form-group col-lg-12 col-md-12">
-                                <button class="btn btn-theme" id="submitpropertybutton" type="submit">Submit &amp; Preview</button>
+                                <button class="btn btn-theme" id="submitpropertybutton" onClick={e => {e.preventDefault();handleSubmit()}} type="submit">Submit &amp; Preview</button>
                             </div>
                                         
                         </div>

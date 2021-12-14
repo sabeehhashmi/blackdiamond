@@ -1,12 +1,11 @@
 import React, {useState,useEffect, useMemo} from 'react'
 import { withRouter, useHistory } from 'react-router-dom'; 
 import axios from 'axios'
-function ResetPassword(props) {
-    const [pass, setPass] = useState("")
-    const [email, setEmail] = useState("")
+function ForgetPassword({}) {
+    const [email, setEmail] = useState(null)
     const [error, setError] = useState(null);
-    const [verificationcode, setVerificationcode] = useState(null);
     const [message, setMessage] = useState(null);
+
     let history = useHistory();
     const [redirectToReferrer, setRedirectToReferrer] = useState("false")
     const handleChange= async (e)=>{
@@ -14,11 +13,9 @@ function ResetPassword(props) {
         e.preventDefault()
         
         
-        const URL = "http://127.0.0.1:8000/api/reset-password?email="+email+"&verification_code="+verificationcode+"&password="+pass;
+        const URL = "http://127.0.0.1:8000/api/reset-password-code";
         var data2 ={
-            email: email,
-            verificationcode: verificationcode,
-            password:pass
+            email: email
             
         }
         console.log("my data in front bs",data2)
@@ -37,10 +34,16 @@ function ResetPassword(props) {
           }}
         
         axios(options).then(response => {
-          console.log("Response is ",response)
-          if(response.data.success==1){
-              setMessage(response.data.message)
-          }
+          
+            console.log(response.data)
+            localStorage.setItem('reset', JSON.stringify(email))
+            
+            //setMessage(response.data)
+            if(response.data.success==1){
+                history.push('/reset')
+            }
+            
+
           
         })
         
@@ -66,44 +69,57 @@ function ResetPassword(props) {
         // Update the document title using the browser API
         
         
-        //console.log("Reset Password: ", token)
-        const data = JSON.parse(localStorage.getItem('reset'))
-        console.log(JSON.parse(localStorage.getItem('reset')))
-        setEmail(JSON.parse(localStorage.getItem('reset')))
+        console.log("We know evertything now", email)
         
       },[]);
     
     return (
         
              
-            
+            /* 
                 <div>
             <form >
-                <h3>Reset Password</h3>
+                <h3>Retrieve Password Using Email</h3>
 
                 <div className="form-group">
-                    <label>Verification Code</label>
-                    <input onChange={(e)=>{setVerificationcode(e.target.value)}} className="form-control" placeholder="Enter Verification Code" />
+                    <label>Email address</label>
+                    <input type="email" onChange={(e)=>{setEmail(e.target.value)}} className="form-control" placeholder="Enter email" />
                 </div>
-
-                <div className="form-group">
-                    <label>New Password</label>
-                    <input type="password" onChange={(e)=>{setPass(e.target.value)}} className="form-control" placeholder="Enter password" />
-                </div>
-
-                
-
                 <button type="submit" onClick={handleChange} className="btn btn-primary btn-block">Submit</button>
                 
 
             </form>
-            {error? <div class="alert alert-danger" role="alert">{error}</div> : null}
             {message? <div class="alert alert-success" role="alert">{message}</div> : null}
             
             
             
+            </div> */
+            <div style={{width:'80%', marginLeft:'10%'}}>
+            <div class="modal-body">
+                <h4 class="modal-header-title">Retrieve Password Using Email</h4>
+                <div class="login-form">
+                    <form>
+
+                        <div class="form-group">
+                            <label>Email</label>
+                            <div class="input-with-icon">
+                                <input type="text" onChange={(e)=>{setEmail(e.target.value)}} class="form-control" placeholder="Email" />
+                                <i class="ti-user"></i>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <button type="submit" onClick={e => {e.preventDefault();handleChange()}} id="newloginbutton" >Submit</button>
+                        </div>
+
+                    </form>
+                    {message? <div class="alert alert-success" role="alert">{message}</div> : null}
+                </div>
+                
+                
             </div>
-            
+        </div>
             
             
         
@@ -112,4 +128,4 @@ function ResetPassword(props) {
     
 }
  
-export default withRouter(ResetPassword)
+export default withRouter(ForgetPassword)

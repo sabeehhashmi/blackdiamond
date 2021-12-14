@@ -7,8 +7,8 @@ import { BrowserRouter as Router, Switch, Route, Link,withRouter, useHistory, Re
 import NabBar2 from './NavBar2'
 import Settings from './Settings'
 import {UserContext} from './UserContext'
-import ForgetPassword from './ForgetPassword';
-import ResetPassword from './ResetPassword';
+import ForgetPassword from './Authentication/ForgetPassword';
+import ResetPassword from './Authentication/ResetPassword';
 import NewSignUpForm from './Authentication/NewSignUpForm';
 import NewLoginForm from './Authentication/NewLoginForm'
 import AddNewProperty from './AddNewProperty/AddNewProperty'
