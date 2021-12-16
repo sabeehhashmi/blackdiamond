@@ -26,4 +26,10 @@ Route::get('/packages', [App\Http\Controllers\SubcriptionPackages::class,'allPac
 Route::get("package/{id?}", [App\Http\Controllers\SubcriptionPackages::class,'package']);
 Route::get("deletepackage/{id}", [App\Http\Controllers\SubcriptionPackages::class,'deletePackage']);
 Route::post("savepackage", [App\Http\Controllers\SubcriptionPackages::class,'savePackage']);
+
+/*Categories*/
+Route::get('/categories', [App\Http\Controllers\Categories::class,'allCategories']);
+Route::get("category/{id?}", [App\Http\Controllers\Categories::class,'category']);
+Route::get("deletecategory/{id}", [App\Http\Controllers\Categories::class,'deleteCategory']);
+Route::post("savecategory", [App\Http\Controllers\Categories::class,'saveCategory']);
 });

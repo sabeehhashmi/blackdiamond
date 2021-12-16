@@ -39,10 +39,9 @@ class Users extends Controller
 
             $user->save();
 
+                    $token = $user->createToken('blackDiamond')->plainTextToken;
 
-
-
-            return Response::json(['success' => 1, 'message' => 'Your Account is created']);
+            return Response::json(['success' => 1, 'message' => 'Your Account is created','user'=>$user,'token'=>$token]);
 
 
         } catch (Exception $ex) {

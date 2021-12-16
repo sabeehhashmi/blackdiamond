@@ -22,3 +22,5 @@ Route::post('/register-user', [App\Http\Controllers\Users::class, 'registerNewUs
 Route::post('/login-user', [App\Http\Controllers\Users::class, 'login']);
 Route::post('/reset-password-code', [App\Http\Controllers\Users::class, 'resetPasswordCode']);
 Route::post('/reset-password', [App\Http\Controllers\Users::class, 'resetPassword']);
+Route::get('/categories', [App\Http\Controllers\Categories::class,'Categories']);
+Route::get('/property_types', [App\Http\Controllers\Properties::class,'PropertyTypes']);
