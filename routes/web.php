@@ -13,15 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+
+Route::get('/', [App\Http\Controllers\Admin\Dashboard::class,'index'])->middleware('auth');;
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/dashboard', [App\Http\Controllers\Admin\Dashboard::class,'index']);
-Route::group([ 'prefix' => 'admin'], function () {
+Route::get('/dashboard', [App\Http\Controllers\Admin\Dashboard::class,'index'])->middleware('auth');;
+Route::group([ 'prefix' => 'admin','middleware' => ['auth']], function () {
 Route::get('/packages', [App\Http\Controllers\SubcriptionPackages::class,'allPackages']);
 Route::get("package/{id?}", [App\Http\Controllers\SubcriptionPackages::class,'package']);
 Route::get("deletepackage/{id}", [App\Http\Controllers\SubcriptionPackages::class,'deletePackage']);

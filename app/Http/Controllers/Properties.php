@@ -105,12 +105,13 @@ public function getSellerProperties(Request $request){
 /*get all properties*/
 public function getAllProperties(Request $request){
     $perperties =  Property::with('images')->get();
-    return ['success'=>1,'perperties'=>$perperties];
+    return ['success'=>1,'prperties'=>$perperties];
 }
 public function getSingleProperty(Request $request){
     $perperty =  Property::with('images')->find($request->id);
-    return ['success'=>1,'perperty'=>$perperty];
+    return ['success'=>1,'property'=>$perperty];
 }
+/*delete property*/
 public function deleteProperty(Request $request){
     $perperty =  Property::find($request->id);
     if($perperty)
