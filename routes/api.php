@@ -22,5 +22,16 @@ Route::post('/register-user', [App\Http\Controllers\Users::class, 'registerNewUs
 Route::post('/login-user', [App\Http\Controllers\Users::class, 'login']);
 Route::post('/reset-password-code', [App\Http\Controllers\Users::class, 'resetPasswordCode']);
 Route::post('/reset-password', [App\Http\Controllers\Users::class, 'resetPassword']);
+
+Route::get('/get-user', [App\Http\Controllers\Users::class, 'getUser']);
+
 Route::get('/categories', [App\Http\Controllers\Categories::class,'Categories']);
 Route::get('/property_types', [App\Http\Controllers\Properties::class,'PropertyTypes']);
+
+
+Route::get('/seller-properties', [App\Http\Controllers\Properties::class,'getSellerProperties']);
+Route::get('/get-all-properties', [App\Http\Controllers\Properties::class,'getAllProperties']);
+Route::get('/get-single-property', [App\Http\Controllers\Properties::class,'getSingleProperty']);
+
+Route::post('/save-property', [App\Http\Controllers\Properties::class, 'saveProperty']);
+Route::post('/delete-property', [App\Http\Controllers\Properties::class, 'deleteProperty']);

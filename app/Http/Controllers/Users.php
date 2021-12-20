@@ -129,4 +129,12 @@ public function resetPassword(Request $request){
 }
 return array('success' => 0,  'message' => 'Wrong Verification code');
 }
+public function getUser(Request $request){
+     $user = User::find($request->id);
+    if($user){
+
+         return array('success' => 1,  'user' => $user);
+
+    }
+}
 }
