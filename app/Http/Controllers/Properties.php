@@ -7,6 +7,7 @@ use App\Models\PropertyType;
 use App\Models\Property;
 use App\Models\Attachment;
 use Intervention\Image\Facades\Image;
+Use DB;
 
 class Properties extends Controller
 {
@@ -118,88 +119,52 @@ public function deleteProperty(Request $request){
         $perperty->delete();
     return ['success'=>1,'message'=>'Property deleted'];
 }
-return User::where('role_id', '!=', '2')->search($request->searchParam)->paginate(10);
 
-public function filterPostsSearch($category,$longitude,$latitude,$type,$order=''){
-  /*$obj = Posts::select('posts.id')->where('category_id',$category)->get();
-  return $obj;*/
-  //Set Max Distance
+public function searchProperty(Request $request){
+    $latitude= $request->latitude;
+    $longitude= $request->longitude;
 
-  $role = 'sparetime';
-  if(isset($_COOKIE['current_user']) && $_COOKIE['current_user']=='host'){
-    $role = 'host';
-  }
-  $maxDistance = 100000;
 
-        //Query injections in case cordinates are not defined
-  $inj = ", 'unknown' as distance";
-
-        //Check if client has provided coordinates
-
-  if ($latitude && $latitude) {
     $latitude = (double)$latitude;
     $longitude = (double)$longitude;
-    if ($longitude != null && $longitude != '' && $latitude != null && $latitude != '') {
-    /*            //Query injection in case cordinates are defined
-      $inj = "ifnull((SELECT
-       (
-      3959 * acos (
-      cos ( radians(31.459) )
-      * cos( radians( longitude ) )
-      * cos( radians( latitude ) - radians(74.269) )
-      + sin ( radians(31.459) )
-      * sin( radians( latitude ) )
-      )
-      ) AS distance
-      FROM posts
-      HAVING distance < 30), 'unknown') as distance";*/
-      $inj = " ifnull((select
 
-      (case when posts.longitude is null then 'unknown' else ( 6371 *
+    $maxDistance = 100000;
 
-      acos( cos( radians($latitude) ) *
+    $inj = ", 'unknown' as distance";
 
-      cos( radians( posts.latitude ) ) *
+    if ($longitude != '' &&  $latitude != '') {
 
-      cos( radians( posts.longitude ) -
+        $inj = " ifnull((select
 
-      radians($longitude) ) +
+        (case when properties.longitude is null then 'unknown' else ( 6371 *
 
-      sin( radians($latitude) ) *
+        acos( cos( radians($latitude) ) *
 
-      sin(radians(posts.latitude)) ) ) end) AS distance
+        cos( radians( properties.latitude ) ) *
 
-      from posts dtpst where dtpst.id = posts.id
+        cos( radians( properties.longitude ) -
+
+        radians($longitude) ) +
+
+        sin( radians($latitude) ) *
+
+        sin(radians(properties.latitude)) ) ) end) AS distance
+
+        from properties dtpst where dtpst.id = properties.id
 
     ), 'unknown') as distance";
-
-  }
-
-
-}
-// $obj = Posts::select('posts.id',DB::raw($inj))->where('category_id',$category)->get();
-$obj = Posts::select(DB::raw("posts.*, $inj"))->whereRaw("(" . str_replace('as distance', '', ltrim($inj, ',')) . ") <= 5")->where('category_id',$category)->where('user_id','!=',Auth::id());
-
-if($order == 'high'){
-  $obj = $obj->orderBy('price', 'desc')->get();
-}
-elseif($order == 'low'){
-  $obj = $obj->orderBy('price', 'asc')->get();
-}
-elseif($order == 'new'){
-  $obj = $obj->orderBy('id', 'desc')->get();
-}
-elseif($order == 'old'){
-  $obj = $obj->orderBy('id', 'asc')->get();
+    $obj = Property::select(DB::raw("properties.*, $inj"))->whereRaw("(" . str_replace('as distance', '', ltrim($inj, ',')) . ") <= 5")->search($request->searchParam)->get();
 }
 else{
-  $obj = $obj->get();
+    $obj = Property::search($request->searchParam)->get();
 }
-$previous_data = array('category'=>$category,'longitude'=>$longitude,'latitude'=>$latitude,'type'=>$type,'order'=>$order);
-return view('sparetime.search-post-results', compact('obj','previous_data'));
+//dd($inj);
 
-/*$obj = Posts::select('posts*')->where('category_id',$category)->get();
-return $obj;*/
+
+return ['success'=>1,'properties'=>$obj];
+
 }
+
+
 
 }
