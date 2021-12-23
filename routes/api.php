@@ -32,7 +32,14 @@ Route::get('/property_types', [App\Http\Controllers\Properties::class,'PropertyT
 Route::get('/seller-properties', [App\Http\Controllers\Properties::class,'getSellerProperties']);
 Route::get('/get-all-properties', [App\Http\Controllers\Properties::class,'getAllProperties']);
 Route::get('/get-single-property', [App\Http\Controllers\Properties::class,'getSingleProperty']);
+
+
+
 Route::get('/search-property', [App\Http\Controllers\Properties::class,'searchProperty']);
 
 Route::post('/save-property', [App\Http\Controllers\Properties::class, 'saveProperty']);
 Route::post('/delete-property', [App\Http\Controllers\Properties::class, 'deleteProperty']);
+
+Route::post('/add-bid', [App\Http\Controllers\Properties::class, 'addBid']);
+
+Route::get('/get-bids', [App\Http\Controllers\Properties::class,'getBids']);

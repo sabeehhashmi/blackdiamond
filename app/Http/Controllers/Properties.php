@@ -5,14 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\PropertyType;
 use App\Models\Property;
+use App\Models\Category;
 use App\Models\Attachment;
+use App\Models\PropertyBid;
+use App\Models\UserBid;
 use Intervention\Image\Facades\Image;
 Use DB;
 
 class Properties extends Controller
 {
  public function PropertyTypes(){
-    $property_types =PropertyType::all();
+    $property_types = Category::all();
 
     return $property_types;
 }
@@ -153,18 +156,58 @@ public function searchProperty(Request $request){
         from properties dtpst where dtpst.id = properties.id
 
     ), 'unknown') as distance";
-    $obj = Property::select(DB::raw("properties.*, $inj"))->whereRaw("(" . str_replace('as distance', '', ltrim($inj, ',')) . ") <= 5")->search($request->searchParam)->get();
+    $obj = Property::select(DB::raw("properties.*, $inj"))->whereRaw("(" . str_replace('as distance', '', ltrim($inj, ',')) . ") <= 5")->search($request->searchParam);
 }
 else{
-    $obj = Property::search($request->searchParam)->get();
+    $obj = Property::search($request->searchParam);
 }
-//dd($inj);
 
+if($request->propert_type_id){
+  $obj = $obj->where('propert_type_id',$request->propert_type_id);  
+}
+if($request->price){
+  $obj = $obj->where('price',$request->price);  
+}
+
+
+$obj = $obj->get();
 
 return ['success'=>1,'properties'=>$obj];
 
 }
+public function addBid(Request $request){
 
 
+    $user_bids = UserBid::where('user_id',$request->user_id)->first();
+
+    if(empty($user_bids)){
+
+     $free_bids = get_option('free_bids');
+     $user_bids = new UserBid;
+     $user_bids->user_id = $request->user_id;
+     $user_bids->remaining_bids =$free_bids;
+     $user_bids->save();
+ }
+ if($user_bids->remaining_bids < 1){
+    return ['success'=>0,'message'=>"Your free bids are consumed, please subscribe to package to purchase new bids"];
+}
+$property_bid = new PropertyBid();
+$property_bid->user_id = $request->user_id;
+$property_bid->property_id = $request->property_id;
+$property_bid->title = $request->title;
+$property_bid->offer_description = $request->offer_description;
+
+$property_bid->save();
+
+$user_bids->remaining_bids =$user_bids->remaining_bids-1;
+$user_bids->save();
+return ['success'=>1,'message'=>"Bid for this property has been adeed"];
+
+}
+public function getBids(Request $request){
+   $perperty =  Property::with('images','bids')->find($request->id);
+   return ['success'=>1,'prperties'=>$perperty];
+
+}
 
 }

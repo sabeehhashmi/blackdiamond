@@ -30,4 +30,7 @@ class Property extends Model
     public function images(){
         return $this->hasMany(Attachment::class,'source_id','id');
     }
+    public function bids(){
+        return $this->hasMany(PropertyBid::class,'property_id','id');
+    }
 }

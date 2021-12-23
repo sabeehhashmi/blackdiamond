@@ -31,5 +31,12 @@ Route::post("savepackage", [App\Http\Controllers\SubcriptionPackages::class,'sav
 Route::get('/categories', [App\Http\Controllers\Categories::class,'allCategories']);
 Route::get("category/{id?}", [App\Http\Controllers\Categories::class,'category']);
 Route::get("deletecategory/{id}", [App\Http\Controllers\Categories::class,'deleteCategory']);
+
 Route::post("savecategory", [App\Http\Controllers\Categories::class,'saveCategory']);
+
+
+/*Settings*/
+
+Route::get("settings", [App\Http\Controllers\Admin\Settings::class,'getSettings']);
+Route::post("save-setting", [App\Http\Controllers\Admin\Settings::class,'saveSetting']);
 });

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 20, 2021 at 03:03 PM
+-- Generation Time: Dec 23, 2021 at 09:17 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.3.31
 
@@ -295,8 +295,35 @@ CREATE TABLE `properties` (
 --
 
 INSERT INTO `properties` (`id`, `name`, `status`, `propert_type_id`, `price`, `area`, `property`, `rental`, `address`, `city`, `state`, `zipcode`, `detail_information`, `seller_id`, `longitude`, `latitude`, `created_at`, `updated_at`) VALUES
-(1, 'Test', 1, 1, 200, 200, 1, 1, 'Test address', 'lahore', 'Lahore', '3223423', 'test is information', 1, '23232', '232233221', '2021-12-17 02:33:40', '2021-12-17 02:33:40'),
+(1, 'Test', 1, 1, 200, 200, 1, 1, 'Test address', 'lahore', 'Lahore', '3223423', 'test is information', 1, '30.230286934699468', '71.48306014574344', '2021-12-17 02:33:40', '2021-12-20 16:22:05'),
 (2, 'Test Property2', 1, 1, 200, 200, 1, 1, 'Test address', 'lahore', 'Lahore', '3223423', 'test is information', 1, '23232', '232233221', '2021-12-17 03:11:43', '2021-12-17 03:12:36');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `property_bids`
+--
+
+CREATE TABLE `property_bids` (
+  `id` int(11) NOT NULL,
+  `property_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `title` varchar(100) NOT NULL,
+  `offer_description` varchar(300) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `property_bids`
+--
+
+INSERT INTO `property_bids` (`id`, `property_id`, `user_id`, `title`, `offer_description`, `created_at`, `updated_at`) VALUES
+(1, 1, 2, 'I wan to purcahse this', 'I really need to purchase this', '2021-12-22 22:58:11', '2021-12-22 22:58:11'),
+(2, 1, 2, 'I wan to purcahse this', 'I really need to purchase this', '2021-12-22 22:58:33', '2021-12-22 22:58:33'),
+(3, 1, 2, 'I wan to purcahse this', 'I really need to purchase this', '2021-12-22 22:59:05', '2021-12-22 22:59:05'),
+(4, 1, 2, 'I wan to purcahse this', 'I really need to purchase this', '2021-12-22 23:00:54', '2021-12-22 23:00:54'),
+(5, 1, 2, 'I wan to purcahse this', 'I really need to purchase this', '2021-12-22 23:01:12', '2021-12-22 23:01:12');
 
 -- --------------------------------------------------------
 
@@ -318,6 +345,29 @@ CREATE TABLE `property_types` (
 INSERT INTO `property_types` (`id`, `name`, `created_at`, `updated_at`) VALUES
 (1, 'house', '2021-12-15 18:45:07', '2021-12-15 18:45:07'),
 (2, 'shop', '2021-12-15 18:45:07', '2021-12-15 18:45:07');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `settings`
+--
+
+CREATE TABLE `settings` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `value` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `settings`
+--
+
+INSERT INTO `settings` (`id`, `name`, `value`, `created_at`, `updated_at`) VALUES
+(1, 'STRIPE_API_KEY', 'sk_test_XbaM4DjbeUmQCA8Cv6OHKraX00YbemdDiR', '2021-12-23 16:28:32', '2021-12-24 00:50:24'),
+(2, 'STRIPE_API_VERSION', '2020-08-27', '2021-12-23 16:28:37', '2021-12-23 16:30:21'),
+(3, 'free_bids', '15', '2021-12-23 16:29:00', '2021-12-23 17:20:34');
 
 -- --------------------------------------------------------
 
@@ -370,7 +420,29 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `role`, `phone`, `created_at`, `updated_at`) VALUES
 (2, 'sabeeh', 'sabeeh@gmail.com', NULL, '$2y$10$XCqwWxWNh2hY1/bhV5y9POTiD3r3CuL8hC44uhGqPVSU/ffHpk1e.', NULL, 3, NULL, '2021-12-08 15:37:12', '2021-12-08 15:37:12'),
 (3, 'sabeeh', 'shashmi@gmail.com', NULL, '$2y$10$0vuji9Rvg0pxrJtcCTUfvO0XZtvpz05ySVH6auywfci2e8DgHl.v6', NULL, 2, '243435454554', '2021-12-10 13:37:12', '2021-12-10 13:37:12'),
-(4, 'sabeeh', 's-hashmi@gmail.com', NULL, '$2y$10$EOhjg/nPFbRUJSWsu5heauO96dQMJuI9iLVkDaCbCve4rF6WQUUaK', NULL, 2, '2434354545543', '2021-12-10 13:39:24', '2021-12-10 15:41:09');
+(4, 'sabeeh', 's-hashmi@gmail.com', NULL, '$2y$10$EOhjg/nPFbRUJSWsu5heauO96dQMJuI9iLVkDaCbCve4rF6WQUUaK', NULL, 2, '2434354545543', '2021-12-10 13:39:24', '2021-12-10 15:41:09'),
+(5, 'Admin', 'admin@gmail.com', NULL, '$2y$10$69aRbr1mO1qYXwmpxK1bb.mJo.FbdC9YyFfMfZE1PSp1ElUnS.oNC', NULL, 3, NULL, '2021-12-20 22:11:52', '2021-12-20 22:11:52');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_bids`
+--
+
+CREATE TABLE `user_bids` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `remaining_bids` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `user_bids`
+--
+
+INSERT INTO `user_bids` (`id`, `user_id`, `remaining_bids`, `created_at`, `updated_at`) VALUES
+(1, 2, 11, '2021-12-22 22:58:11', '2021-12-22 23:01:12');
 
 -- --------------------------------------------------------
 
@@ -477,9 +549,21 @@ ALTER TABLE `properties`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `property_bids`
+--
+ALTER TABLE `property_bids`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `property_types`
 --
 ALTER TABLE `property_types`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `settings`
+--
+ALTER TABLE `settings`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -494,6 +578,12 @@ ALTER TABLE `subcription_packages`
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `users_email_unique` (`email`);
+
+--
+-- Indexes for table `user_bids`
+--
+ALTER TABLE `user_bids`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `verification_codes`
@@ -554,10 +644,22 @@ ALTER TABLE `properties`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `property_bids`
+--
+ALTER TABLE `property_bids`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `property_types`
 --
 ALTER TABLE `property_types`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `settings`
+--
+ALTER TABLE `settings`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `subcription_packages`
@@ -569,7 +671,13 @@ ALTER TABLE `subcription_packages`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `user_bids`
+--
+ALTER TABLE `user_bids`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `verification_codes`
