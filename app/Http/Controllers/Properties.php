@@ -170,7 +170,7 @@ if($request->price){
 }
 
 
-$obj = $obj->get();
+$obj = $obj->with('images')->get();
 
 return ['success'=>1,'properties'=>$obj];
 
@@ -206,7 +206,7 @@ return ['success'=>1,'message'=>"Bid for this property has been adeed"];
 }
 public function getBids(Request $request){
    $perperty =  Property::with('images','bids')->find($request->id);
-   return ['success'=>1,'prperties'=>$perperty];
+   return ['success'=>1,'prperty'=>$perperty];
 
 }
 
