@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 23, 2021 at 09:17 PM
+-- Generation Time: Dec 27, 2021 at 06:39 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.3.31
 
@@ -40,7 +40,6 @@ CREATE TABLE `attachments` (
 --
 
 INSERT INTO `attachments` (`id`, `path`, `source_id`, `created_at`, `updated_at`) VALUES
-(1, '/properties/image_1639679410.jpeg', 0, '2021-12-17 02:30:11', '2021-12-17 02:30:11'),
 (2, '/properties/image_1639679411.jpeg', 0, '2021-12-17 02:30:11', '2021-12-17 02:30:11'),
 (3, '/properties/image_1639679620.jpeg', 1, '2021-12-17 02:33:40', '2021-12-17 02:33:40'),
 (4, '/properties/image_1639679620.jpeg', 1, '2021-12-17 02:33:40', '2021-12-17 02:33:40'),

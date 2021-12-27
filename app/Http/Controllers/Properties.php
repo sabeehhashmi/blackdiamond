@@ -118,9 +118,22 @@ public function getSingleProperty(Request $request){
 /*delete property*/
 public function deleteProperty(Request $request){
     $perperty =  Property::find($request->id);
+
     if($perperty)
         $perperty->delete();
+
     return ['success'=>1,'message'=>'Property deleted'];
+}
+
+/*delete image*/
+public function deleteImage(Request $request){
+
+    $image = Attachment::find($request->id);
+
+    if($image)
+        $image->delete();
+
+    return ['success'=>1,'message'=>'Image deleted'];
 }
 
 public function searchProperty(Request $request){
@@ -165,8 +178,16 @@ else{
 if($request->propert_type_id){
   $obj = $obj->where('propert_type_id',$request->propert_type_id);  
 }
-if($request->price){
-  $obj = $obj->where('price',$request->price);  
+
+/*Price Filter*/
+if($request->start_price && $request->end_price){
+ $obj = $obj->where('price','>=',$request->start_price)->where('price','<=',$request->end_price);     
+}
+elseif($request->start_price){
+  $obj = $obj->where('price','>=',$request->start_price);  
+}
+elseif($request->end_price){
+  $obj = $obj->where('price','<=',$request->end_price);  
 }
 
 

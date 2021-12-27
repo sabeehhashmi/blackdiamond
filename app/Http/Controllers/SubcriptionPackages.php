@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\SubcriptionPackage;
+use App\Models\User;
 use Cartalyst\Stripe\Stripe;
 
 class SubcriptionPackages extends Controller
@@ -60,5 +61,60 @@ class SubcriptionPackages extends Controller
       $package = '';
     }
     return view('admin.addpackage',compact('package'));
+  }
+  public function subscribeCustomerToPlan(Request $request){
+    /*Create customer*/
+    $user=User::find($request->user_id);
+    if($user){
+
+      $email = $user->email;
+      $token = $request->token;
+
+      $ch = curl_init();
+
+      curl_setopt($ch, CURLOPT_URL, 'https://api.stripe.com/v1/customers');
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+      curl_setopt($ch, CURLOPT_POST, 1);
+      curl_setopt($ch, CURLOPT_POSTFIELDS, "email=".$email."&source=".$token);
+      curl_setopt($ch, CURLOPT_USERPWD, get_option('STRIPE_API_KEY') . ':' . '');
+
+      $headers = array();
+      $headers[] = 'Content-Type: application/x-www-form-urlencoded';
+      curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+      $result = curl_exec($ch);
+      if (curl_errno($ch)) {
+        echo 'Error:' . curl_error($ch);
+      }
+      curl_close($ch);
+
+      /*Subscribe to plan*/
+
+      $ch = curl_init();
+
+      $customer='';
+      $plan = $request->subscription_id;
+      curl_setopt($ch, CURLOPT_URL, 'https://api.stripe.com/v1/subscriptions');
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+      curl_setopt($ch, CURLOPT_POST, 1);
+      curl_setopt($ch, CURLOPT_POSTFIELDS, "customer=".$customer."\n&items[0][plan]=".$plan);
+      curl_setopt($ch, CURLOPT_USERPWD, get_option('STRIPE_API_KEY') . ':' . '');
+
+      $headers = array();
+      $headers[] = 'Content-Type: application/x-www-form-urlencoded';
+      curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+      $result = curl_exec($ch);
+      if (curl_errno($ch)) {
+        echo 'Error:' . curl_error($ch);
+      }
+      curl_close($ch);
+    }
+  }
+
+  public function getallPlans(){
+    $packages =SubcriptionPackage::all();
+
+    return ['success'=>1,'plans'=>$packages];
   }
 }

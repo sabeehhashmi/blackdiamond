@@ -40,6 +40,12 @@ Route::get('/search-property', [App\Http\Controllers\Properties::class,'searchPr
 Route::post('/save-property', [App\Http\Controllers\Properties::class, 'saveProperty']);
 Route::post('/delete-property', [App\Http\Controllers\Properties::class, 'deleteProperty']);
 
+/*delete Property Image*/
+Route::post('/delete-image', [App\Http\Controllers\Properties::class, 'deleteImage']);
+
 Route::post('/add-bid', [App\Http\Controllers\Properties::class, 'addBid']);
 
 Route::get('/get-bids', [App\Http\Controllers\Properties::class,'getBids']);
+
+/*get all plans*/
+Route::get('/get-all-plans', [App\Http\Controllers\SubcriptionPackages::class,'getallPlans']);
