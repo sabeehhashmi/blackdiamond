@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\SubcriptionPackage;
 use App\Models\User;
 use Cartalyst\Stripe\Stripe;
+use App\Models\UserBid;
 
 class SubcriptionPackages extends Controller
 {
@@ -87,17 +88,20 @@ class SubcriptionPackages extends Controller
         echo 'Error:' . curl_error($ch);
       }
       curl_close($ch);
+      
+      $result = json_decode($result);
+      $customer = $result->id;
 
       /*Subscribe to plan*/
 
       $ch = curl_init();
 
-      $customer='';
+      
       $plan = $request->subscription_id;
       curl_setopt($ch, CURLOPT_URL, 'https://api.stripe.com/v1/subscriptions');
       curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
       curl_setopt($ch, CURLOPT_POST, 1);
-      curl_setopt($ch, CURLOPT_POSTFIELDS, "customer=".$customer."\n&items[0][plan]=".$plan);
+      curl_setopt($ch, CURLOPT_POSTFIELDS, "customer=".$customer."&items[0][plan]=".$plan);
       curl_setopt($ch, CURLOPT_USERPWD, get_option('STRIPE_API_KEY') . ':' . '');
 
       $headers = array();
@@ -109,6 +113,17 @@ class SubcriptionPackages extends Controller
         echo 'Error:' . curl_error($ch);
       }
       curl_close($ch);
+      $result = json_decode($result);
+      $subsciption = $result->id;
+
+      if($subsciption){
+        $user_bids = UserBid::where('user_id',$request->user_id)->first();
+        $bids_package = SubcriptionPackage::where('subscription_id',$request->subscription_id)->first();
+
+        $user_bids->remaining_bids = $user_bids->remaining_bids + $bids_package->bids;
+        $user_bids->save();
+        return ['success'=>1,'message'=>'You are subsciption is successfull'];
+      }
     }
   }
 

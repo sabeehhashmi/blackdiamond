@@ -40,3 +40,6 @@ Route::post("savecategory", [App\Http\Controllers\Categories::class,'saveCategor
 Route::get("settings", [App\Http\Controllers\Admin\Settings::class,'getSettings']);
 Route::post("save-setting", [App\Http\Controllers\Admin\Settings::class,'saveSetting']);
 });
+
+Route::get('stripe',  [App\Http\Controllers\StripePaymentController::class,'stripe']);
+Route::post('stripe', [App\Http\Controllers\StripePaymentController::class,'stripePost'])->name('stripe.post');
