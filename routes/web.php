@@ -39,7 +39,22 @@ Route::post("savecategory", [App\Http\Controllers\Categories::class,'saveCategor
 
 Route::get("settings", [App\Http\Controllers\Admin\Settings::class,'getSettings']);
 Route::post("save-setting", [App\Http\Controllers\Admin\Settings::class,'saveSetting']);
+
+/*Buyers*/
+Route::get("buyers", [App\Http\Controllers\Admin\Buyer::class,'buyers']);
+Route::get("buyer-bids/{id}", [App\Http\Controllers\Admin\Buyer::class,'buyerBids']);
+Route::get("get-buyer/{id}", [App\Http\Controllers\Admin\Buyer::class,'buyerDetail']);
+
+/*Sellers*/
+Route::get("sellers", [App\Http\Controllers\Admin\Seller::class,'sellers']);
+Route::get("seller-properties/{id}", [App\Http\Controllers\Properties::class,'sellerProperties']);
+
+
+Route::get("get-property/{id}", [App\Http\Controllers\Properties::class,'getProperty']);
+Route::get("property-bids/{id}", [App\Http\Controllers\Properties::class,'getPropertyBids']);
 });
 
 Route::get('stripe',  [App\Http\Controllers\StripePaymentController::class,'stripe']);
 Route::post('stripe', [App\Http\Controllers\StripePaymentController::class,'stripePost'])->name('stripe.post');
+
+

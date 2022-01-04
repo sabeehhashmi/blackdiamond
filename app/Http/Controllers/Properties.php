@@ -217,18 +217,39 @@ $property_bid->user_id = $request->user_id;
 $property_bid->property_id = $request->property_id;
 $property_bid->title = $request->title;
 $property_bid->offer_description = $request->offer_description;
+$property_bid->start_price = $request->start_price;
 
 $property_bid->save();
 
 $user_bids->remaining_bids =$user_bids->remaining_bids-1;
 $user_bids->save();
-return ['success'=>1,'message'=>"Bid for this property has been adeed"];
+return ['success'=>1,'message'=>"Bid for this property has been added"];
 
 }
 public function getBids(Request $request){
    $perperty =  Property::with('images','bids')->find($request->id);
    return ['success'=>1,'prperty'=>$perperty];
 
+}
+
+
+/*Admin Area*/
+
+public function getProperty($id){
+    $perperty =  Property::with('images','bids')->find($id);
+    return view('admin.propertydetail',compact('perperty'));
+}
+
+public function getPropertyBids($id){
+   $property =  Property::with('images','bids')->find($id);
+
+   return view('admin.propertybids',compact('property'));
+
+}
+
+public function sellerProperties($id){
+    $perperties =  Property::where('seller_id',$id)->with('images')->get();
+    return view('admin.sellerproperties',compact('perperties'));
 }
 
 }

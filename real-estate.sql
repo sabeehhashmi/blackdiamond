@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 27, 2021 at 06:39 PM
+-- Generation Time: Jan 04, 2022 at 03:51 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.3.31
 
@@ -294,8 +294,8 @@ CREATE TABLE `properties` (
 --
 
 INSERT INTO `properties` (`id`, `name`, `status`, `propert_type_id`, `price`, `area`, `property`, `rental`, `address`, `city`, `state`, `zipcode`, `detail_information`, `seller_id`, `longitude`, `latitude`, `created_at`, `updated_at`) VALUES
-(1, 'Test', 1, 1, 200, 200, 1, 1, 'Test address', 'lahore', 'Lahore', '3223423', 'test is information', 1, '30.230286934699468', '71.48306014574344', '2021-12-17 02:33:40', '2021-12-20 16:22:05'),
-(2, 'Test Property2', 1, 1, 200, 200, 1, 1, 'Test address', 'lahore', 'Lahore', '3223423', 'test is information', 1, '23232', '232233221', '2021-12-17 03:11:43', '2021-12-17 03:12:36');
+(1, 'Test', 1, 1, 200, 200, 1, 1, 'Test address', 'lahore', 'Lahore', '3223423', 'test is information', 3, '30.230286934699468', '71.48306014574344', '2021-12-17 02:33:40', '2021-12-30 18:53:51'),
+(2, 'Test Property2', 1, 1, 200, 200, 1, 1, 'Test address', 'lahore', 'Lahore', '3223423', 'test is information', 3, '23232', '232233221', '2021-12-17 03:11:43', '2021-12-30 18:53:54');
 
 -- --------------------------------------------------------
 
@@ -308,7 +308,8 @@ CREATE TABLE `property_bids` (
   `property_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `title` varchar(100) NOT NULL,
-  `offer_description` varchar(300) NOT NULL,
+  `offer_description` varchar(300) DEFAULT NULL,
+  `start_price` float DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -317,12 +318,12 @@ CREATE TABLE `property_bids` (
 -- Dumping data for table `property_bids`
 --
 
-INSERT INTO `property_bids` (`id`, `property_id`, `user_id`, `title`, `offer_description`, `created_at`, `updated_at`) VALUES
-(1, 1, 2, 'I wan to purcahse this', 'I really need to purchase this', '2021-12-22 22:58:11', '2021-12-22 22:58:11'),
-(2, 1, 2, 'I wan to purcahse this', 'I really need to purchase this', '2021-12-22 22:58:33', '2021-12-22 22:58:33'),
-(3, 1, 2, 'I wan to purcahse this', 'I really need to purchase this', '2021-12-22 22:59:05', '2021-12-22 22:59:05'),
-(4, 1, 2, 'I wan to purcahse this', 'I really need to purchase this', '2021-12-22 23:00:54', '2021-12-22 23:00:54'),
-(5, 1, 2, 'I wan to purcahse this', 'I really need to purchase this', '2021-12-22 23:01:12', '2021-12-22 23:01:12');
+INSERT INTO `property_bids` (`id`, `property_id`, `user_id`, `title`, `offer_description`, `start_price`, `created_at`, `updated_at`) VALUES
+(1, 1, 2, 'I wan to purcahse this', 'I really need to purchase this', NULL, '2021-12-22 22:58:11', '2021-12-22 22:58:11'),
+(2, 1, 2, 'I wan to purcahse this', 'I really need to purchase this', NULL, '2021-12-22 22:58:33', '2021-12-22 22:58:33'),
+(3, 1, 2, 'I wan to purcahse this', 'I really need to purchase this', NULL, '2021-12-22 22:59:05', '2021-12-22 22:59:05'),
+(4, 1, 2, 'I wan to purcahse this', 'I really need to purchase this', NULL, '2021-12-22 23:00:54', '2021-12-22 23:00:54'),
+(5, 1, 2, 'I wan to purcahse this', 'I really need to purchase this', NULL, '2021-12-22 23:01:12', '2021-12-22 23:01:12');
 
 -- --------------------------------------------------------
 
@@ -420,7 +421,7 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `re
 (2, 'sabeeh', 'sabeeh@gmail.com', NULL, '$2y$10$XCqwWxWNh2hY1/bhV5y9POTiD3r3CuL8hC44uhGqPVSU/ffHpk1e.', NULL, 3, NULL, '2021-12-08 15:37:12', '2021-12-08 15:37:12'),
 (3, 'sabeeh', 'shashmi@gmail.com', NULL, '$2y$10$0vuji9Rvg0pxrJtcCTUfvO0XZtvpz05ySVH6auywfci2e8DgHl.v6', NULL, 2, '243435454554', '2021-12-10 13:37:12', '2021-12-10 13:37:12'),
 (4, 'sabeeh', 's-hashmi@gmail.com', NULL, '$2y$10$EOhjg/nPFbRUJSWsu5heauO96dQMJuI9iLVkDaCbCve4rF6WQUUaK', NULL, 2, '2434354545543', '2021-12-10 13:39:24', '2021-12-10 15:41:09'),
-(5, 'Admin', 'admin@gmail.com', NULL, '$2y$10$69aRbr1mO1qYXwmpxK1bb.mJo.FbdC9YyFfMfZE1PSp1ElUnS.oNC', NULL, 3, NULL, '2021-12-20 22:11:52', '2021-12-20 22:11:52');
+(5, 'Admin', 'admin@gmail.com', NULL, '$2y$10$69aRbr1mO1qYXwmpxK1bb.mJo.FbdC9YyFfMfZE1PSp1ElUnS.oNC', NULL, 1, NULL, '2021-12-20 22:11:52', '2021-12-20 22:11:52');
 
 -- --------------------------------------------------------
 
@@ -441,7 +442,7 @@ CREATE TABLE `user_bids` (
 --
 
 INSERT INTO `user_bids` (`id`, `user_id`, `remaining_bids`, `created_at`, `updated_at`) VALUES
-(1, 2, 11, '2021-12-22 22:58:11', '2021-12-22 23:01:12');
+(1, 2, 101, '2021-12-22 22:58:11', '2021-12-29 00:59:49');
 
 -- --------------------------------------------------------
 
