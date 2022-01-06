@@ -11,6 +11,7 @@ use App\Models\PropertyBid;
 use App\Models\UserBid;
 use Intervention\Image\Facades\Image;
 Use DB;
+use App\Models\Setting;
 
 class Properties extends Controller
 {
@@ -251,5 +252,10 @@ public function sellerProperties($id){
     $perperties =  Property::where('seller_id',$id)->with('images')->get();
     return view('admin.sellerproperties',compact('perperties'));
 }
+public function ceoMessage()
+{
+    $ceo_message = Setting::where('name','ceo_message')->first();
 
+    return ['success'=>1,'message'=>$ceo_message->value];
+}
 }

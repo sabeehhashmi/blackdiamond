@@ -3,17 +3,10 @@
 @section('content')
 <div class="page-breadcrumb bg-white">
     <div class="row align-items-center">
-        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-            <h4 class="page-title">Dashboard</h4>
+       <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+            <a href="/dashboard" class="fw-normal"><h4 class="page-title">Dashboard</h4></a>
         </div>
-        <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-            <div class="d-md-flex">
-                <ol class="breadcrumb ms-auto">
-                    <li><a href="#" class="fw-normal">Dashboard</a></li>
-                </ol>
-
-            </div>
-        </div>
+        
     </div>
 
 </div>
@@ -26,8 +19,11 @@
     <!-- ============================================================== -->
     <div class="row">
         <div class="col-sm-12">
+
             <div class="card">
+
                 <div class="card-body">
+                    <h3 class="box-title">Save Package</h3>
                     <form class="form-horizontal form-material" _lpchecked="1" action="/admin/savepackage" method="POST">
                        @csrf
                        <input type="hidden" name="id" value="{{isset($package->id)?$package->id:''}}">

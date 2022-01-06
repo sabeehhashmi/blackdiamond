@@ -10,16 +10,9 @@
 <div class="page-breadcrumb bg-white">
     <div class="row align-items-center">
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-            <h4 class="page-title">Property Details</h4>
+            <a href="/dashboard" class="fw-normal"><h4 class="page-title">Dashboard</h4></a>
         </div>
-        <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-            <div class="d-md-flex">
-                <ol class="breadcrumb ms-auto">
-                    <li><a href="#" class="fw-normal">Dashboard</a></li>
-                </ol>
-
-            </div>
-        </div>
+        
     </div>
 
 </div>
@@ -39,11 +32,11 @@
                              <div class="col-sm-10">
                              </div>
                             <div class="col-sm-2">
-                                <a href="/admin/property-bids/{{$perperty->id}}" target="_blank" class="btn btn-info">
-                                    <h4>{{$perperty->bids->count()}} Bids</h4></a>
+                                <a href="/admin/property-bids/{{$perperty->id}}" target="_blank" class="btn btn-success text-white">
+                                    <h6>{{$perperty->bids->count()}} Bids</h6></a>
                                 </div>
-                        </div>
-
+                       
+                                    <div class="col-md-6">
                         <div class="form-group mb-4">
 
                                 <label class="col-md-12 p-0">Name</label>
@@ -61,7 +54,7 @@
                                             <input type="text" placeholder="Category Slug" class="form-control p-0 border-0" name="slug"  value="{{$perperty->price}}" readonly> </div>
                                         </div>
                                         <div class="form-group mb-4">
-                                            <label class="col-md-12 p-0">Area</label>
+                                            <label class="col-md-12 p-0">Area Covered</label>
                                             <div class="col-md-12 border-bottom p-0">
                                                 <input type="text" placeholder="Category Slug" class="form-control p-0 border-0" name="slug"  value="{{$perperty->area}} sqrft" readonly> </div>
                                             </div>
@@ -98,12 +91,14 @@
 
                                                                     </div>
                                                                 </div>
+                                                            </div>
+                                                            <div class="col-md-6 propert-images"> 
                                                                 <div class="form-group mb-4">
                                                                     
                                                                     @if($perperty->images->first())
                                                                     <div class="row"> 
                                                                     @foreach($perperty->images as $image)
-                                                                    <div class="col-md-4 border-bottom p-0">
+                                                                    <div class="col-md-6 border-bottom p-0">
                                                                         <a href="{{$image->path}}">
                                                                     <img src="{{$image->path}}" class="rounded mx-auto d-block" alt="property image">
                                                                     </a>
@@ -113,6 +108,8 @@
                                                                     @endif
 
                                                                 </div>
+                                                                </div>
+                                                                 </div>
                                                             </form>
                                                         </div>
                                                         <div></div></div>

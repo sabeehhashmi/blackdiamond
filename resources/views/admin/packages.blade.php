@@ -4,16 +4,9 @@
 <div class="page-breadcrumb bg-white">
     <div class="row align-items-center">
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-            <h4 class="page-title">Dashboard</h4>
+            <a href="/dashboard" class="fw-normal"><h4 class="page-title">Dashboard</h4></a>
         </div>
-        <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-            <div class="d-md-flex">
-                <ol class="breadcrumb ms-auto">
-                    <li><a href="#" class="fw-normal">Dashboard</a></li>
-                </ol>
-
-            </div>
-        </div>
+        
     </div>
 
 </div>
@@ -25,8 +18,8 @@
         <div class="col-sm-12">
             <div class="white-box">
                 <h3 class="box-title">Packages</h3>
-                <a href="/admin/package/" target="_blank" class="btn btn-info text-white">
-                    <h4>Add New Package</h4></a>
+                <a href="/admin/package/" target="_blank" class="btn btn-success text-white">
+                    <h6>Add New Package</h6></a>
                     <div class="table-responsive">
                         <table class="table text-nowrap">
                             <thead>
@@ -34,8 +27,9 @@
                                     <th class="border-top-0">#</th>
                                     <th class="border-top-0">Name</th>
                                     <th class="border-top-0">Bids</th>
-                                    <th class="border-top-0">price</th>
-                                    <th class="border-top-0">cycle</th>
+                                    <th class="border-top-0">Price</th>
+                                    <th class="border-top-0">Cycle</th>
+                                    <th class="border-top-0">Action</th>
 
                                 </tr>
                             </thead>

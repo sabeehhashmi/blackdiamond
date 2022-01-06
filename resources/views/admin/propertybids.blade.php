@@ -4,16 +4,9 @@
 <div class="page-breadcrumb bg-white">
     <div class="row align-items-center">
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-            <h4 class="page-title">Dashboard</h4>
+            <a href="/dashboard" class="fw-normal"><h4 class="page-title">Dashboard</h4></a>
         </div>
-        <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-            <div class="d-md-flex">
-                <ol class="breadcrumb ms-auto">
-                    <li><a href="#" class="fw-normal">Dashboard</a></li>
-                </ol>
-
-            </div>
-        </div>
+        
     </div>
 
 </div>
@@ -44,10 +37,14 @@
                             @foreach($property->bids as $property_bid)
                             <tr>
                                 <td>{{$counter}}</td>
-                                <td>{{$property_bid->title}}</td>
-                                <td>{{$property_bid->offer_description}}</td>
                                 <td>
-                                    <a href="/admin/get-buyer/{{$property_bid->user_id}}" target="_blank" class="btn btn-info text-white">
+                                    {{$property_bid->title}}
+                                </td>
+                                <td>
+                                    {{$property_bid->offer_description}}
+                                </td>
+                                <td>
+                                    <a href="/admin/get-buyer/{{$property_bid->user_id}}" target="_blank" class="btn btn-success text-white">
                                         Buyer Detail
                                     </a> 
                                 </td>

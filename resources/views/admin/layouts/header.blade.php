@@ -6,12 +6,12 @@
 
                         <b class="logo-icon">
 
-                            <img src="plugins/images/logo-icon.png" alt="homepage" />
+                            <img src="/admin/plugins/images/logo-icon.png" alt="homepage" />
                         </b>
 
                         <span class="logo-text">
                             <!-- dark Logo text -->
-                            <img src="plugins/images/logo-text.png" alt="homepage" />
+                            <img src="/admin/plugins/images/logo-text.png" alt="homepage" />
                         </span>
                     </a>
 
@@ -35,7 +35,7 @@
                         </li>
 
                         <li>
-                            <a class="dropdown-item" href="{{ route('logout') }}"
+                            <a class="logout-btn" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}

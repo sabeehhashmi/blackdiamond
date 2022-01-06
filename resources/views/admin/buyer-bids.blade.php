@@ -3,17 +3,10 @@
 @section('content')
 <div class="page-breadcrumb bg-white">
     <div class="row align-items-center">
-        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-            <h4 class="page-title">Dashboard</h4>
+       <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+            <a href="/dashboard" class="fw-normal"><h4 class="page-title">Dashboard</h4></a>
         </div>
-        <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-            <div class="d-md-flex">
-                <ol class="breadcrumb ms-auto">
-                    <li><a href="#" class="fw-normal">Dashboard</a></li>
-                </ol>
-
-            </div>
-        </div>
+       
     </div>
 
 </div>
@@ -46,7 +39,7 @@
                                 <td>{{$buyer_bid->title}}</td>
                                 <td>{{$buyer_bid->offer_description}}</td>
                                 <td>
-                                    <a href="/admin/get-property/{{$buyer_bid->property_id}}" target="_blank" class="btn btn-info text-white">
+                                    <a href="/admin/get-property/{{$buyer_bid->property_id}}" target="_blank" class="btn btn-success text-white">
                                         Property Details
                                     </a> 
                                 </td>
