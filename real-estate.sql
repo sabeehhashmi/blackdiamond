@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 04, 2022 at 03:51 PM
+-- Generation Time: Jan 10, 2022 at 05:33 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.3.31
 
@@ -310,6 +310,7 @@ CREATE TABLE `property_bids` (
   `title` varchar(100) NOT NULL,
   `offer_description` varchar(300) DEFAULT NULL,
   `start_price` float DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 2 COMMENT '1 accepted, 2 pending, 3 rejected',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -318,12 +319,12 @@ CREATE TABLE `property_bids` (
 -- Dumping data for table `property_bids`
 --
 
-INSERT INTO `property_bids` (`id`, `property_id`, `user_id`, `title`, `offer_description`, `start_price`, `created_at`, `updated_at`) VALUES
-(1, 1, 2, 'I wan to purcahse this', 'I really need to purchase this', NULL, '2021-12-22 22:58:11', '2021-12-22 22:58:11'),
-(2, 1, 2, 'I wan to purcahse this', 'I really need to purchase this', NULL, '2021-12-22 22:58:33', '2021-12-22 22:58:33'),
-(3, 1, 2, 'I wan to purcahse this', 'I really need to purchase this', NULL, '2021-12-22 22:59:05', '2021-12-22 22:59:05'),
-(4, 1, 2, 'I wan to purcahse this', 'I really need to purchase this', NULL, '2021-12-22 23:00:54', '2021-12-22 23:00:54'),
-(5, 1, 2, 'I wan to purcahse this', 'I really need to purchase this', NULL, '2021-12-22 23:01:12', '2021-12-22 23:01:12');
+INSERT INTO `property_bids` (`id`, `property_id`, `user_id`, `title`, `offer_description`, `start_price`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, 2, 'I wan to purcahse this', 'I really need to purchase this', NULL, 3, '2021-12-22 22:58:11', '2022-01-07 10:38:57'),
+(2, 1, 2, 'I wan to purcahse this', 'I really need to purchase this', NULL, 2, '2021-12-22 22:58:33', '2021-12-22 22:58:33'),
+(3, 1, 2, 'I wan to purcahse this', 'I really need to purchase this', NULL, 2, '2021-12-22 22:59:05', '2021-12-22 22:59:05'),
+(4, 1, 2, 'I wan to purcahse this', 'I really need to purchase this', NULL, 2, '2021-12-22 23:00:54', '2021-12-22 23:00:54'),
+(5, 1, 2, 'I wan to purcahse this', 'I really need to purchase this', NULL, 2, '2021-12-22 23:01:12', '2021-12-22 23:01:12');
 
 -- --------------------------------------------------------
 
@@ -367,7 +368,8 @@ CREATE TABLE `settings` (
 INSERT INTO `settings` (`id`, `name`, `value`, `created_at`, `updated_at`) VALUES
 (1, 'STRIPE_API_KEY', 'sk_test_XbaM4DjbeUmQCA8Cv6OHKraX00YbemdDiR', '2021-12-23 16:28:32', '2021-12-24 00:50:24'),
 (2, 'STRIPE_API_VERSION', '2020-08-27', '2021-12-23 16:28:37', '2021-12-23 16:30:21'),
-(3, 'free_bids', '15', '2021-12-23 16:29:00', '2021-12-23 17:20:34');
+(3, 'free_bids', '15', '2021-12-23 16:29:00', '2021-12-23 17:20:34'),
+(4, 'ceo_message', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, ', '2021-12-23 16:29:00', '2022-01-06 16:03:22');
 
 -- --------------------------------------------------------
 
@@ -409,6 +411,7 @@ CREATE TABLE `users` (
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `role` int(11) NOT NULL DEFAULT 3 COMMENT '1 for admin, 2 for seller and 3 for buyer',
   `phone` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `profile_image` varchar(400) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -417,11 +420,11 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `role`, `phone`, `created_at`, `updated_at`) VALUES
-(2, 'sabeeh', 'sabeeh@gmail.com', NULL, '$2y$10$XCqwWxWNh2hY1/bhV5y9POTiD3r3CuL8hC44uhGqPVSU/ffHpk1e.', NULL, 3, NULL, '2021-12-08 15:37:12', '2021-12-08 15:37:12'),
-(3, 'sabeeh', 'shashmi@gmail.com', NULL, '$2y$10$0vuji9Rvg0pxrJtcCTUfvO0XZtvpz05ySVH6auywfci2e8DgHl.v6', NULL, 2, '243435454554', '2021-12-10 13:37:12', '2021-12-10 13:37:12'),
-(4, 'sabeeh', 's-hashmi@gmail.com', NULL, '$2y$10$EOhjg/nPFbRUJSWsu5heauO96dQMJuI9iLVkDaCbCve4rF6WQUUaK', NULL, 2, '2434354545543', '2021-12-10 13:39:24', '2021-12-10 15:41:09'),
-(5, 'Admin', 'admin@gmail.com', NULL, '$2y$10$69aRbr1mO1qYXwmpxK1bb.mJo.FbdC9YyFfMfZE1PSp1ElUnS.oNC', NULL, 1, NULL, '2021-12-20 22:11:52', '2021-12-20 22:11:52');
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `role`, `phone`, `profile_image`, `created_at`, `updated_at`) VALUES
+(2, 'sabeeh', 'sabeeh@gmail.com', NULL, '$2y$10$XCqwWxWNh2hY1/bhV5y9POTiD3r3CuL8hC44uhGqPVSU/ffHpk1e.', NULL, 3, NULL, NULL, '2021-12-08 15:37:12', '2021-12-08 15:37:12'),
+(3, 'sabeeh', 'shashmi@gmail.com', NULL, '$2y$10$0vuji9Rvg0pxrJtcCTUfvO0XZtvpz05ySVH6auywfci2e8DgHl.v6', NULL, 2, '243435454554', NULL, '2021-12-10 13:37:12', '2021-12-10 13:37:12'),
+(4, 'sabeeh', 's-hashmi@gmail.com', NULL, '$2y$10$EOhjg/nPFbRUJSWsu5heauO96dQMJuI9iLVkDaCbCve4rF6WQUUaK', NULL, 2, '2434354545543', NULL, '2021-12-10 13:39:24', '2021-12-10 15:41:09'),
+(5, 'Admin', 'admin@gmail.com', NULL, '$2y$10$69aRbr1mO1qYXwmpxK1bb.mJo.FbdC9YyFfMfZE1PSp1ElUnS.oNC', NULL, 1, NULL, NULL, '2021-12-20 22:11:52', '2021-12-20 22:11:52');
 
 -- --------------------------------------------------------
 
@@ -659,7 +662,7 @@ ALTER TABLE `property_types`
 -- AUTO_INCREMENT for table `settings`
 --
 ALTER TABLE `settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `subcription_packages`

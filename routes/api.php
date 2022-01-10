@@ -49,6 +49,8 @@ Route::get('/get-bids', [App\Http\Controllers\Properties::class,'getBids']);
 
 Route::get('/ceo-message', [App\Http\Controllers\Properties::class,'ceoMessage']);
 
+Route::post('/accept-reject-bid', [App\Http\Controllers\Properties::class,'acceptRejectBid']);
+
 /*get all plans*/
 Route::get('/get-all-plans', [App\Http\Controllers\SubcriptionPackages::class,'getallPlans']);
 

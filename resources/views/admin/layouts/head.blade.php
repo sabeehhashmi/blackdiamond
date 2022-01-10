@@ -34,5 +34,10 @@
     padding-top: 71px;
     padding-left: 17px;
 }
+.setting-heading {
+    
+    padding: 10px 0;
+    font-weight: 700;
+}
    </style>
 </head>

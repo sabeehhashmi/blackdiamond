@@ -30,16 +30,64 @@ class Users extends Controller
             if($user){
                 return Response::json(['success' => 0,  'message' => 'Phone Already Exist']);
             }
+
+            $file = isset($request->image)?$request->image:'';
+            $fileName = '';
+            if(!empty($file)){
+
+
+                $path = '/profile_images/';
+
+                $image = $file;
+
+                if (preg_match('/^data:image\/(\w+);base64,/', $image, $type)) {
+
+                    $image = substr($image, strpos($image, ',') + 1);
+
+                    $type = strtolower($type[1]);
+
+                    $image = base64_decode($image);
+
+
+
+                    $destinationPath    = $path;
+
+                    if (!file_exists(public_path().$destinationPath)) {
+
+                        mkdir(public_path().$destinationPath, 0777, true);
+
+                    }
+
+                    $fileName = 'image_'.time().'.'.$type;
+                    $tempFile = $destinationPath . $fileName;
+                    file_put_contents(public_path().$tempFile, $image);
+
+                    $img = Image::make(public_path().$destinationPath.$fileName);
+                    $img->resize(250, 250,
+                        function ($constraint) {
+                            $constraint->aspectRatio();
+                        });
+
+                    if (!file_exists(public_path().$destinationPath.'thumb/')) {
+                        mkdir(public_path().$destinationPath.'thumb/', 0777, true);
+                    }
+                    $img->save(public_path().$destinationPath.'/thumb/'.$fileName);
+
+                }
+
+            }
+            $fileName = ($fileName)?'/profile_images/'.$fileName:'';
             $user = new User();
             $user->name = $request->name;
             $user->email = $request->email;
             $user->role = $request->role;
             $user->phone = $request->phone;
+            $user->profile_image = $fileName;
             $user->password = Hash::make($request->password);
 
             $user->save();
 
-                    $token = $user->createToken('blackDiamond')->plainTextToken;
+            $token = $user->createToken('blackDiamond')->plainTextToken;
 
             return Response::json(['success' => 1, 'message' => 'Your Account is created','user'=>$user,'token'=>$token]);
 
@@ -130,11 +178,11 @@ public function resetPassword(Request $request){
 return array('success' => 0,  'message' => 'Wrong Verification code');
 }
 public function getUser(Request $request){
-     $user = User::find($request->id);
-    if($user){
+ $user = User::find($request->id);
+ if($user){
 
-         return array('success' => 1,  'user' => $user);
+     return array('success' => 1,  'user' => $user);
 
-    }
+ }
 }
 }

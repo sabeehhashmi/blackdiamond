@@ -25,6 +25,8 @@
                                 <th class="border-top-0">#</th>
                                 <th class="border-top-0">Bid Title</th>
                                 <th class="border-top-0">Bid Offer</th>
+                                <th class="border-top-0">Start Price</th>
+                                <th class="border-top-0">Status</th>
                                 <th class="border-top-0">Buyer</th>
 
                             </tr>
@@ -32,6 +34,11 @@
                         <tbody>
                             @php
                             $counter = 1;
+                            $status = [
+                            1=>'Accepted',
+                            2=>'Pending',
+                            3=>'Rejected'
+                            ]
                             @endphp
                             @if($property->bids->first())
                             @foreach($property->bids as $property_bid)
@@ -43,6 +50,8 @@
                                 <td>
                                     {{$property_bid->offer_description}}
                                 </td>
+                                <td>{{$property_bid->start_price}}</td>
+                                <td>{{$status[$property_bid->status]}}</td>
                                 <td>
                                     <a href="/admin/get-buyer/{{$property_bid->user_id}}" target="_blank" class="btn btn-success text-white">
                                         Buyer Detail

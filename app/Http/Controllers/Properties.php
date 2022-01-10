@@ -15,7 +15,7 @@ use App\Models\Setting;
 
 class Properties extends Controller
 {
- public function PropertyTypes(){
+   public function PropertyTypes(){
     $property_types = Category::all();
 
     return $property_types;
@@ -182,7 +182,7 @@ if($request->propert_type_id){
 
 /*Price Filter*/
 if($request->start_price && $request->end_price){
- $obj = $obj->where('price','>=',$request->start_price)->where('price','<=',$request->end_price);     
+   $obj = $obj->where('price','>=',$request->start_price)->where('price','<=',$request->end_price);     
 }
 elseif($request->start_price){
   $obj = $obj->where('price','>=',$request->start_price);  
@@ -204,13 +204,13 @@ public function addBid(Request $request){
 
     if(empty($user_bids)){
 
-     $free_bids = get_option('free_bids');
-     $user_bids = new UserBid;
-     $user_bids->user_id = $request->user_id;
-     $user_bids->remaining_bids =$free_bids;
-     $user_bids->save();
- }
- if($user_bids->remaining_bids < 1){
+       $free_bids = get_option('free_bids');
+       $user_bids = new UserBid;
+       $user_bids->user_id = $request->user_id;
+       $user_bids->remaining_bids =$free_bids;
+       $user_bids->save();
+   }
+   if($user_bids->remaining_bids < 1){
     return ['success'=>0,'message'=>"Your free bids are consumed, please subscribe to package to purchase new bids"];
 }
 $property_bid = new PropertyBid();
@@ -227,9 +227,23 @@ $user_bids->save();
 return ['success'=>1,'message'=>"Bid for this property has been added"];
 
 }
+/*Bid Accept Reject*/
+public function acceptRejectBid(Request $request){
+    $property_bid = PropertyBid::find($request->id);
+    if($property_bid){
+        $property_bid->status = $request->status;
+        $property_bid->save();
+        $status = [
+            1=>'Accepted',
+            2=>'Pending',
+            3=>'Rejected'
+        ];
+        return ['success'=>1,'message'=>'Bid '.$status[$request->status]];
+    }
+}
 public function getBids(Request $request){
-   $perperty =  Property::with('images','bids')->find($request->id);
-   return ['success'=>1,'prperty'=>$perperty];
+ $perperty =  Property::with('images','bids')->find($request->id);
+ return ['success'=>1,'prperty'=>$perperty];
 
 }
 
@@ -242,9 +256,9 @@ public function getProperty($id){
 }
 
 public function getPropertyBids($id){
-   $property =  Property::with('images','bids')->find($id);
+ $property =  Property::with('images','bids')->find($id);
 
-   return view('admin.propertybids',compact('property'));
+ return view('admin.propertybids',compact('property'));
 
 }
 
