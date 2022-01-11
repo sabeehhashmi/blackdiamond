@@ -197,6 +197,10 @@ $obj = $obj->with('images')->get();
 return ['success'=>1,'properties'=>$obj];
 
 }
+public function getRemainingBids(Request $request){
+    $remaining_bids = UserBid::where('user_id',$request->user_id)->first();
+    return ['success'=>1,'remaining_bids'=>$remaining_bids];
+}
 public function addBid(Request $request){
 
 

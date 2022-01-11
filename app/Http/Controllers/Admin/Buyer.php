@@ -27,4 +27,11 @@ class Buyer extends Controller
 
         return view('admin.buyer-detail',compact('user'));
     }
+
+    public function getBuyerBids(Request $request){
+
+        $buyer_bids = PropertyBid::where('user_id',$request->id)->get();
+
+        return ['success'=>1,'buyer_bids'=>$buyer_bids];
+    }
 }
