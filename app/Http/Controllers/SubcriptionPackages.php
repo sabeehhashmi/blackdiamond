@@ -64,7 +64,17 @@ class SubcriptionPackages extends Controller
     return view('admin.addpackage',compact('package'));
   }
   public function subscribeCustomerToPlan(Request $request){
-    /*Create customer*/
+   
+    $user_bids = UserBid::where('user_id',$request->user_id)->first();
+
+    if(empty($user_bids)){
+
+       $free_bids = get_option('free_bids');
+       $user_bids = new UserBid;
+       $user_bids->user_id = $request->user_id;
+       $user_bids->remaining_bids =$free_bids;
+       $user_bids->save();
+   }
     $user=User::find($request->user_id);
     if($user){
 
@@ -117,7 +127,7 @@ class SubcriptionPackages extends Controller
       $subsciption = $result->id;
 
       if($subsciption){
-        $user_bids = UserBid::where('user_id',$request->user_id)->first();
+        
         $bids_package = SubcriptionPackage::where('subscription_id',$request->subscription_id)->first();
 
         $user_bids->remaining_bids = $user_bids->remaining_bids + $bids_package->bids;
