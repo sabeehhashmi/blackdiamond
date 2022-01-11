@@ -11,6 +11,7 @@ use Hash;
 use Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Intervention\Image\Facades\Image;
 
 class Users extends Controller
 {
